@@ -1,0 +1,152 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/claude/credit-rule-engine
+plugins: anyio-4.14.0, cov-7.1.0
+collecting ... collected 120 items
+
+tests/test_api.py::test_health_check PASSED                              [  0%]
+tests/test_api.py::test_analyse_gap_analysis_mode PASSED                 [  1%]
+tests/test_api.py::test_analyse_eligibility_mode PASSED                  [  2%]
+tests/test_api.py::test_analyse_unknown_mode_returns_400 PASSED          [  3%]
+tests/test_api.py::test_analyse_missing_mode_returns_422 PASSED          [  4%]
+tests/test_eligibility.py::TestSampleInputMatchesBriefExactly::test_not_eligible_due_to_low_score PASSED [  5%]
+tests/test_eligibility.py::TestSampleInputMatchesBriefExactly::test_every_rule_reported PASSED [  5%]
+tests/test_eligibility.py::TestSampleInputMatchesBriefExactly::test_cibil_failure_has_specific_message PASSED [  6%]
+tests/test_eligibility.py::TestAllRulesPass::test_eligible_true_and_no_fail_reasons PASSED [  7%]
+tests/test_eligibility.py::TestMultipleRulesFail::test_all_failures_listed PASSED [  8%]
+tests/test_eligibility.py::TestMissingField::test_missing_field_reported_as_failure_not_crash PASSED [  9%]
+tests/test_eligibility.py::TestMissingField::test_empty_customer_profile_does_not_crash PASSED [ 10%]
+tests/test_eligibility.py::TestBoundaryValues::test_age_boundaries[21-True] PASSED [ 10%]
+tests/test_eligibility.py::TestBoundaryValues::test_age_boundaries[60-True] PASSED [ 11%]
+tests/test_eligibility.py::TestBoundaryValues::test_age_boundaries[20-False] PASSED [ 12%]
+tests/test_eligibility.py::TestBoundaryValues::test_age_boundaries[61-False] PASSED [ 13%]
+tests/test_eligibility.py::TestBoundaryValues::test_cibil_score_boundaries[650-True] PASSED [ 14%]
+tests/test_eligibility.py::TestBoundaryValues::test_cibil_score_boundaries[649-False] PASSED [ 15%]
+tests/test_eligibility.py::TestBoundaryValues::test_foir_boundaries[0.5-True] PASSED [ 15%]
+tests/test_eligibility.py::TestBoundaryValues::test_foir_boundaries[0.51-False] PASSED [ 16%]
+tests/test_eligibility.py::TestBoundaryValues::test_loan_amount_cap_at_exact_boundary PASSED [ 17%]
+tests/test_eligibility.py::TestBoundaryValues::test_loan_amount_cap_just_over_boundary PASSED [ 18%]
+tests/test_eligibility.py::TestAndGroupLogic::test_single_failure_in_and_group_fails_whole_group PASSED [ 19%]
+tests/test_eligibility.py::TestWeightedRiskScore::test_risk_score_zero_when_all_pass PASSED [ 20%]
+tests/test_eligibility.py::TestWeightedRiskScore::test_risk_score_one_hundred_when_all_fail PASSED [ 20%]
+tests/test_eligibility.py::TestWeightedRiskScore::test_risk_score_matches_manual_calculation PASSED [ 21%]
+tests/test_eligibility.py::TestWeightedRiskScore::test_risk_score_can_be_disabled PASSED [ 22%]
+tests/test_eligibility.py::TestOrGroupLogicFutureReadiness::test_or_group_passes_if_only_one_subrule_passes PASSED [ 23%]
+tests/test_eligibility.py::TestOrGroupLogicFutureReadiness::test_or_group_fails_if_no_subrule_passes PASSED [ 24%]
+tests/test_eligibility.py::TestNextStep::test_next_step_present_when_ineligible PASSED [ 25%]
+tests/test_eligibility.py::TestNextStep::test_next_step_absent_when_eligible PASSED [ 25%]
+tests/test_eligibility.py::TestNextStep::test_next_step_falls_back_to_first_failure_reason_when_not_cibil PASSED [ 26%]
+tests/test_eligibility.py::TestInvalidInputType::test_non_dict_customer_profile_raises_configuration_error PASSED [ 27%]
+tests/test_evaluator.py::TestRuleEngineConstruction::test_loads_rules_successfully PASSED [ 28%]
+tests/test_evaluator.py::TestRuleEngineConstruction::test_invalid_rules_path_raises_at_construction PASSED [ 29%]
+tests/test_evaluator.py::TestRuleEngineRunDispatch::test_gap_analysis_mode PASSED [ 30%]
+tests/test_evaluator.py::TestRuleEngineRunDispatch::test_eligibility_mode PASSED [ 30%]
+tests/test_evaluator.py::TestRuleEngineRunDispatch::test_unknown_mode_raises_configuration_error PASSED [ 31%]
+tests/test_evaluator.py::TestRuleEngineRunDispatch::test_result_is_json_serializable PASSED [ 32%]
+tests/test_evaluator.py::TestRuleEngineErrorIsImportableAsBaseClass::test_rule_engine_error_exported PASSED [ 33%]
+tests/test_gap_analysis.py::TestSampleInputMatchesBriefExactly::test_gaps_found_count PASSED [ 34%]
+tests/test_gap_analysis.py::TestSampleInputMatchesBriefExactly::test_total_potential_score_gain PASSED [ 35%]
+tests/test_gap_analysis.py::TestSampleInputMatchesBriefExactly::test_fired_gap_ids_in_order PASSED [ 35%]
+tests/test_gap_analysis.py::TestSampleInputMatchesBriefExactly::test_action_text_for_high_utilisation PASSED [ 36%]
+tests/test_gap_analysis.py::TestAllGapRulesFire::test_all_five_rules_fire_when_every_factor_is_bad PASSED [ 37%]
+tests/test_gap_analysis.py::TestNoGapsFound::test_perfect_profile_triggers_no_gaps PASSED [ 38%]
+tests/test_gap_analysis.py::TestNoGapsFound::test_empty_credit_report_triggers_no_gaps PASSED [ 39%]
+tests/test_gap_analysis.py::TestSortingOrder::test_high_impact_sorted_before_medium_and_low PASSED [ 40%]
+tests/test_gap_analysis.py::TestSortingOrder::test_within_same_impact_sorted_by_gain_descending PASSED [ 40%]
+tests/test_gap_analysis.py::TestSortingOrder::test_full_ordering_across_all_three_impact_levels PASSED [ 41%]
+tests/test_gap_analysis.py::TestActionTemplateSubstitution::test_current_value_substituted PASSED [ 42%]
+tests/test_gap_analysis.py::TestActionTemplateSubstitution::test_missing_template_variable_does_not_crash PASSED [ 43%]
+tests/test_gap_analysis.py::TestActionTemplateSubstitution::test_malformed_template_syntax_does_not_crash PASSED [ 44%]
+tests/test_gap_analysis.py::TestActionTemplateSubstitution::test_missing_field_plus_malformed_brace_together_does_not_crash PASSED [ 45%]
+tests/test_gap_analysis.py::TestNullAndMissingFields::test_null_field_value_does_not_fire_rule PASSED [ 45%]
+tests/test_gap_analysis.py::TestNullAndMissingFields::test_missing_field_does_not_fire_rule PASSED [ 46%]
+tests/test_gap_analysis.py::TestInvalidInputType::test_non_dict_credit_report_raises_configuration_error PASSED [ 47%]
+tests/test_gap_analysis.py::TestInvalidInputType::test_wrong_type_for_numeric_field_does_not_fire_rule PASSED [ 48%]
+tests/test_operators.py::TestComparisonOperators::test_gt PASSED         [ 49%]
+tests/test_operators.py::TestComparisonOperators::test_gte PASSED        [ 50%]
+tests/test_operators.py::TestComparisonOperators::test_lt PASSED         [ 50%]
+tests/test_operators.py::TestComparisonOperators::test_lte PASSED        [ 51%]
+tests/test_operators.py::TestComparisonOperators::test_eq PASSED         [ 52%]
+tests/test_operators.py::TestComparisonOperators::test_eq_rejects_bool_vs_numeric_match PASSED [ 53%]
+tests/test_operators.py::TestComparisonOperators::test_eq_bool_vs_bool_still_works PASSED [ 54%]
+tests/test_operators.py::TestComparisonOperators::test_neq PASSED        [ 55%]
+tests/test_operators.py::TestComparisonOperators::test_neq_bool_vs_numeric_treated_as_not_equal PASSED [ 55%]
+tests/test_operators.py::TestBetweenOperator::test_within_range PASSED   [ 56%]
+tests/test_operators.py::TestBetweenOperator::test_at_lower_boundary_inclusive PASSED [ 57%]
+tests/test_operators.py::TestBetweenOperator::test_at_upper_boundary_inclusive PASSED [ 58%]
+tests/test_operators.py::TestBetweenOperator::test_below_range PASSED    [ 59%]
+tests/test_operators.py::TestBetweenOperator::test_above_range PASSED    [ 60%]
+tests/test_operators.py::TestBetweenOperator::test_missing_min_raises_configuration_error PASSED [ 60%]
+tests/test_operators.py::TestBetweenOperator::test_missing_max_raises_configuration_error PASSED [ 61%]
+tests/test_operators.py::TestInNotInOperators::test_in_matches PASSED    [ 62%]
+tests/test_operators.py::TestInNotInOperators::test_in_no_match PASSED   [ 63%]
+tests/test_operators.py::TestInNotInOperators::test_in_missing_values_raises PASSED [ 64%]
+tests/test_operators.py::TestInNotInOperators::test_not_in_matches PASSED [ 65%]
+tests/test_operators.py::TestInNotInOperators::test_not_in_no_match PASSED [ 65%]
+tests/test_operators.py::TestInNotInOperators::test_not_in_missing_values_raises PASSED [ 66%]
+tests/test_operators.py::TestLteMultiplierOperator::test_within_cap PASSED [ 67%]
+tests/test_operators.py::TestLteMultiplierOperator::test_exceeds_cap PASSED [ 68%]
+tests/test_operators.py::TestLteMultiplierOperator::test_at_exact_cap_boundary PASSED [ 69%]
+tests/test_operators.py::TestLteMultiplierOperator::test_missing_multiplier_field_key_raises PASSED [ 70%]
+tests/test_operators.py::TestLteMultiplierOperator::test_missing_multiplier_key_raises PASSED [ 70%]
+tests/test_operators.py::TestLteMultiplierOperator::test_referenced_field_missing_from_profile_raises PASSED [ 71%]
+tests/test_operators.py::TestNumericCoercion::test_string_value_raises PASSED [ 72%]
+tests/test_operators.py::TestNumericCoercion::test_none_value_in_comparison_raises PASSED [ 73%]
+tests/test_operators.py::TestNumericCoercion::test_boolean_value_raises PASSED [ 74%]
+tests/test_operators.py::TestNumericCoercion::test_boolean_threshold_raises PASSED [ 75%]
+tests/test_operators.py::TestOperatorRegistry::test_get_operator_returns_callable PASSED [ 75%]
+tests/test_operators.py::TestOperatorRegistry::test_get_unknown_operator_raises_specific_error PASSED [ 76%]
+tests/test_operators.py::TestOperatorRegistry::test_register_new_operator_at_runtime PASSED [ 77%]
+tests/test_rule_loader.py::TestMalformedYaml::test_unclosed_bracket_raises_rule_load_error PASSED [ 78%]
+tests/test_rule_loader.py::TestMalformedYaml::test_empty_file_raises PASSED [ 79%]
+tests/test_rule_loader.py::TestMalformedYaml::test_non_mapping_top_level_raises PASSED [ 80%]
+tests/test_rule_loader.py::TestMalformedYaml::test_missing_file_raises PASSED [ 80%]
+tests/test_rule_loader.py::TestDuplicateIds::test_duplicate_id_within_gap_rules_raises PASSED [ 81%]
+tests/test_rule_loader.py::TestDuplicateIds::test_duplicate_id_across_gap_and_eligibility_raises PASSED [ 82%]
+tests/test_rule_loader.py::TestDuplicateIds::test_duplicate_id_within_eligibility_subrules_raises PASSED [ 83%]
+tests/test_rule_loader.py::TestInvalidOperators::test_unknown_operator_in_gap_rule_raises_at_load_time PASSED [ 84%]
+tests/test_rule_loader.py::TestInvalidOperators::test_unknown_operator_in_eligibility_rule_raises_at_load_time PASSED [ 85%]
+tests/test_rule_loader.py::TestMissingRequiredKeys::test_gap_rule_missing_action_template_raises PASSED [ 85%]
+tests/test_rule_loader.py::TestMissingRequiredKeys::test_eligibility_subrule_missing_message_raises PASSED [ 86%]
+tests/test_rule_loader.py::TestMissingRequiredKeys::test_eligibility_group_missing_logic_raises PASSED [ 87%]
+tests/test_rule_loader.py::TestInvalidImpactValues::test_invalid_impact_string_raises PASSED [ 88%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_gap_rules_not_a_list_raises PASSED [ 89%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_eligibility_rules_not_a_list_raises PASSED [ 90%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_eligibility_group_entry_not_a_mapping_raises PASSED [ 90%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_eligibility_subrule_entry_not_a_mapping_raises PASSED [ 91%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_gap_rule_entry_not_a_mapping_raises PASSED [ 92%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_negative_weight_on_eligibility_subrule_raises PASSED [ 93%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_non_numeric_weight_on_eligibility_subrule_raises PASSED [ 94%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_negative_estimated_score_gain_raises PASSED [ 95%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_zero_estimated_score_gain_raises PASSED [ 95%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_non_integer_estimated_score_gain_raises PASSED [ 96%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_empty_eligibility_rules_list_in_group_raises PASSED [ 97%]
+tests/test_rule_loader.py::TestInvalidRuleStructures::test_invalid_group_logic_raises PASSED [ 98%]
+tests/test_rule_loader.py::TestEmptyRuleSets::test_empty_gap_and_eligibility_rules_load_successfully PASSED [ 99%]
+tests/test_rule_loader.py::TestValidConfigLoadsSuccessfully::test_real_rules_yaml_loads_without_error PASSED [100%]
+
+=============================== warnings summary ===============================
+../../../usr/local/lib/python3.12/dist-packages/fastapi/testclient.py:1
+  /usr/local/lib/python3.12/dist-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.3-final-0 ________________
+
+Name                           Stmts   Miss  Cover   Missing
+------------------------------------------------------------
+engine/__init__.py                 0      0   100%
+engine/eligibility_engine.py      46      2    96%   83-84
+engine/evaluator.py               17      0   100%
+engine/exceptions.py               5      0   100%
+engine/gap_analyser.py            49      0   100%
+engine/operators.py               62      0   100%
+engine/rule_loader.py             91      1    99%   52
+models/__init__.py                 0      0   100%
+models/response_models.py         45      0   100%
+models/rule_models.py             29      0   100%
+------------------------------------------------------------
+TOTAL                            344      3    99%
+======================== 120 passed, 1 warning in 1.80s ========================

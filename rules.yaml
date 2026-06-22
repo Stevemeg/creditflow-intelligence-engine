@@ -1,0 +1,118 @@
+# ============================================================
+# Softlend Rule Engine Configuration
+# ============================================================
+# This file is the SOLE source of business rules for both engine modes.
+# No thresholds, operators, or scoring values are hardcoded in Python --
+# changing a number here (e.g. the utilisation threshold or the minimum
+# CIBIL score) changes engine behavior with zero code modifications.
+#
+# Adding a new rule = adding a new entry below. Adding a new eligibility
+# *group* with OR logic instead of AND = adding a group with
+# `logic: OR`; engine/eligibility_engine.py already supports both.
+
+# ----------------------------------------------------------------
+# Stage 1: Credit gap rules
+# Each fires when a customer's credit report shows a specific problem.
+# `estimated_score_gain` is the points the customer could recover by
+# fixing that issue. `action_template` supports {current_value} and any
+# other field name present in the credit report input
+# (e.g. {missed_payments_12m}).
+# ----------------------------------------------------------------
+gap_rules:
+  - id: high_utilisation
+    field: credit_utilisation_pct
+    operator: gt
+    value: 30
+    impact: high
+    estimated_score_gain: 35
+    action_template: "Reduce credit card utilisation from {current_value}% to below 30%"
+
+  - id: missed_payments
+    field: missed_payments_12m
+    operator: gt
+    value: 0
+    impact: high
+    estimated_score_gain: 25
+    action_template: "Clear {current_value} overdue EMI(s) to remove missed payment flag"
+
+  - id: written_off_account
+    field: written_off_accounts
+    operator: gt
+    value: 0
+    impact: high
+    estimated_score_gain: 40
+    action_template: "Settle {current_value} written-off account(s) with the lender"
+
+  - id: short_credit_age
+    field: credit_age_months
+    operator: lt
+    value: 36
+    impact: medium
+    estimated_score_gain: 10
+    action_template: "Avoid closing old accounts — your oldest account is only {current_value} months old"
+
+  - id: too_many_enquiries
+    field: hard_enquiries_6m
+    operator: gt
+    value: 3
+    impact: medium
+    estimated_score_gain: 10
+    action_template: "Avoid applying for new credit — you have {current_value} hard enquiries in the last 6 months"
+
+# ----------------------------------------------------------------
+# Stage 2: Eligibility rules
+# Grouped so that group-level AND/OR logic is configurable per group.
+# Today there is one group using AND; a future group could use OR
+# without any engine code changes.
+#
+# `weight` (optional, defaults to 1.0) is used only for the bonus
+# weighted risk-score feature: risk_score = (sum of weights of failed
+# rules / sum of all weights) * 100.
+# ----------------------------------------------------------------
+eligibility_rules:
+  - name: standard_eligibility
+    logic: AND
+    rules:
+      - id: age
+        field: age
+        operator: between
+        min: 21
+        max: 60
+        message: "Age must be between 21 and 60"
+        weight: 1.0
+
+      - id: cibil_score
+        field: cibil_score
+        operator: gte
+        value: 650
+        message: "CIBIL score must be at least 650"
+        weight: 2.0
+
+      - id: foir
+        field: foir
+        operator: lte
+        value: 0.5
+        message: "FOIR (existing EMIs ÷ income) must be 0.50 or below"
+        weight: 1.5
+
+      - id: employment_type
+        field: employment_type
+        operator: in
+        values: ["salaried", "self_employed"]
+        message: "Employment type must be salaried or self-employed"
+        weight: 0.5
+
+      - id: no_written_off_accounts
+        field: written_off_accounts
+        operator: eq
+        value: 0
+        message: "Customer must have no written-off accounts"
+        weight: 2.0
+
+      - id: loan_amount_cap
+        field: requested_amount
+        operator: lte_multiplier
+        multiplier_field: monthly_income
+        multiplier: 10
+        message: "Requested amount cannot exceed 10x monthly income"
+        weight: 1.0

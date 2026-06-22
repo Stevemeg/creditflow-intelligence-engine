@@ -1,0 +1,4 @@
+This directory is where `main.py --output <path>` writes result files
+if you pass the optional --output flag. It's intentionally empty in the
+repo (git doesn't track empty directories on its own, hence this file)
+since generated results aren't meant to be version-controlled.

@@ -1,0 +1,8 @@
+{
+  "customer_id": "C001",
+  "credit_utilisation_pct": 87,
+  "missed_payments_12m": 2,
+  "written_off_accounts": 0,
+  "credit_age_months": 14,
+  "hard_enquiries_6m": 2
+}

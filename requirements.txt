@@ -1,0 +1,12 @@
+# Core engine dependencies (required to run main.py / the engine library)
+PyYAML==6.0.3
+
+# Bonus HTTP endpoint (api.py) -- only needed if you run the /analyse server
+fastapi==0.138.0
+uvicorn==0.49.0
+pydantic==2.13.4
+
+# Testing
+pytest==9.1.1
+pytest-cov==7.1.0
+httpx==0.28.1
