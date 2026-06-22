@@ -1,4 +1,4 @@
-# Softlend — Credit Gap Analyser & Loan Eligibility Evaluator
+# Credit Gap Analyser & Loan Eligibility Evaluator
 
 A configurable, two-mode rule engine that powers Softlend's credit
 improvement product: given a customer's credit report, identify what's
